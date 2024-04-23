@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class BookstoreService {
     private final BookstoreRepository bookstoreRepository;
-    private final BookstoreService bookstoreService;
+//    private final BookstoreService bookstoreService;
 
     @Transactional
     public void removeBookFromInventories(Book book) {

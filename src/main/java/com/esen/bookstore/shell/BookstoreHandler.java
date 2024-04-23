@@ -33,24 +33,25 @@ public class BookstoreHandler {
     public String listBookstores() {
         return bookstoreService.findAll()
                 .stream()
-                .map(bookstore -> "Location: %s, Price modifier: %s, Money in Register: %f".formatted(
+                .map(bookstore -> "Id: %s, Location: %s, Price modifier: %s, Money in Register: %f".formatted(
                         bookstore.getId(),
+                        bookstore.getLocation(),
                         bookstore.getPriceModifier(),
                         bookstore.getMoneyInCashRegister()
                 )).collect(Collectors.joining(System.lineSeparator()));
     }
 
-    @ShellMethod(value = "Delete bookstore", key = "delete book")
+    @ShellMethod(value = "Delete bookstore", key = "delete bookstore")
     public void deleteBookstore(Long id) {
         bookstoreService.deleteBookstore(id);
     }
 
-    @ShellMethod(value = "Update bookstore", key = "update book")
+    @ShellMethod(value = "Update bookstore", key = "update bookstore")
     public void updateBookstore(Long id,
-                           @ShellOption(defaultValue = ShellOption.NULL) String location,
-                           @ShellOption(defaultValue = ShellOption.NULL) Double price,
-                           @ShellOption(defaultValue = ShellOption.NULL) Double money
-                           ) {
+                                @ShellOption(defaultValue = ShellOption.NULL) String location,
+                                @ShellOption(defaultValue = ShellOption.NULL) Double price,
+                                @ShellOption(defaultValue = ShellOption.NULL) Double money
+    ) {
         bookstoreService.updateBookStore(id, location, price, money);
     }
 
