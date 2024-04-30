@@ -1,6 +1,5 @@
 package com.esen.bookstore.shell;
 
-import com.esen.bookstore.model.Book;
 import com.esen.bookstore.model.Bookstore;
 import com.esen.bookstore.service.BookstoreService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @ShellComponent
@@ -55,5 +53,15 @@ public class BookstoreHandler {
         bookstoreService.updateBookStore(id, location, price, money);
     }
 
-
+    @ShellMethod(value = "Get Stock", key = "get stock")
+    public String getStock(Long bookstoreId) {
+        return bookstoreService.getStock(bookstoreId).entrySet()
+                .stream()
+                .map(entry -> "Bookstore ID: %d, Author: %s, Title %s, Count: %s".formatted(
+                        entry.getKey().getId(),
+                        entry.getKey().getAuthor(),
+                        entry.getKey().getTitle(),
+                        entry.getValue()
+                )).collect(Collectors.joining(System.lineSeparator()));
+    }
 }
