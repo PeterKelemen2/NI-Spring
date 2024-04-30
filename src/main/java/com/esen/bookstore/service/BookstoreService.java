@@ -84,4 +84,24 @@ public class BookstoreService {
         var bookstores = bookstoreRepository.findById(bookstoreId).orElseThrow(() -> new RuntimeException("Cannot find book"));
         return bookstores.getInventory();
     }
+
+    public void changeStock(Long bookstoreId, Long bookId, Integer amount) {
+        var bookstore = bookstoreRepository.findById(bookstoreId).orElseThrow(() -> new RuntimeException("Cannot find book"));
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Cannot find book"));
+        if (bookstore.getInventory().containsKey(book)) {
+            var entry = bookstore.getInventory().get(book);
+            if (entry + amount < 0) {
+                throw new UnsupportedOperationException("Invalid amount");
+            }
+            bookstore.getInventory().replace(book, entry + amount);
+        } else {
+            if (amount > 0) {
+                bookstore.getInventory().put(book, amount);
+            } else {
+                throw new UnsupportedOperationException("Invalid amount");
+            }
+        }
+        bookstoreRepository.save(bookstore);
+    }
+
 }

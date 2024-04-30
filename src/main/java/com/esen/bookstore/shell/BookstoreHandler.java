@@ -64,4 +64,9 @@ public class BookstoreHandler {
                         entry.getValue()
                 )).collect(Collectors.joining(System.lineSeparator()));
     }
+
+    @ShellMethod(value = "Add stock", key = "add stock")
+    public void addStock(Long bookstoreId, Long bookId, Integer amount) {
+        bookstoreService.changeStock(bookstoreId, bookId, amount);
+    }
 }
