@@ -3,7 +3,7 @@ name: Build & publish the container image with Maven & Docker
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
